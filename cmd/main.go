@@ -27,6 +27,8 @@ func handleValidateHealthy(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Recebendo fila")
+
 	var dispatcherRequest interface{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dispatcherRequest); err != nil {
