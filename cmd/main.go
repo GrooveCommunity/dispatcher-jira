@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
@@ -26,15 +28,17 @@ func handleValidateHealthy(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
-	var dispatcherRequest interface{}
+
+	body, _ := ioutil.ReadAll(r.Body)
+
+	log.Println(string(body))
+
+	/*var dispatcherRequest interface{}
 
 	if err := json.NewDecoder(r.Body).Decode(&dispatcherRequest); err != nil {
 		http.Error(w, fmt.Sprintf("Não foi possível decodificar o body: %v", err), http.StatusBadRequest)
 		return
 	}
 
-	fmt.Println("Address: " + r.Header.Get("X-FORWARDED-FOR"))
-	fmt.Println("Remote ADDR: " + r.RemoteAddr)
-
-	fmt.Println(dispatcherRequest)
+	fmt.Println(dispatcherRequest)*/
 }
