@@ -8,10 +8,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/GrooveCommunity/dispatcher-jira/entity"
-	"google.golang.org/api/pubsub/v1"
-
+	"github.com/GrooveCommunity/dispatcher-jira/internal"
+	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 	"github.com/gorilla/mux"
+	"google.golang.org/api/pubsub/v1"
 )
 
 type pushRequest struct {
@@ -19,14 +19,25 @@ type pushRequest struct {
 	Subscription string
 }
 
+var (
+	username, token, endpoint, appPort string
+)
+
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/healthy", handleValidateHealthy).Methods("GET")
 	router.HandleFunc("/queue-dispatcher-jira", handleQueueDispatcher).Methods("POST")
 
-	fmt.Println("Port: ", os.Getenv("APP_PORT"))
+	username = os.Getenv("JIRA_USERNAME")
+	token = os.Getenv("JIRA_TOKENAPI")
+	endpoint = os.Getenv("JIRA_ENDPOINT")
+	appPort = os.Getenv("APP_PORT")
 
-	panic(http.ListenAndServe(":"+os.Getenv("APP_PORT"), router))
+	if username == "" || token == "" || endpoint == "" || appPort == "" {
+		log.Fatal("Nem todas as variáveis de ambiente requeridas foram fornecidas. ")
+	}
+
+	panic(http.ListenAndServe(":"+appPort, router))
 }
 
 func handleValidateHealthy(w http.ResponseWriter, r *http.Request) {
@@ -48,14 +59,11 @@ func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Println(string(requestJson))
+	var jiraIssue entity.JiraIssue
 
-	/*var dispatcherRequest interface{}
-
-	if err := json.NewDecoder(r.Body).Decode(&dispatcherRequest); err != nil {
-		http.Error(w, fmt.Sprintf("Não foi possível decodificar o body: %v", err), http.StatusBadRequest)
-		return
+	if err := json.Unmarshal(requestJson, &jiraIssue); err != nil {
+		panic(err)
 	}
 
-	fmt.Println(dispatcherRequest)*/
+	go internal.ForwardIssue(jiraIssue, username, token, endpoint)
 }
