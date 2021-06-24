@@ -21,9 +21,6 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 
 	rules = GetRules()
 
-	log.Println("Regras consideradas: ")
-	log.Println(rules)
-
 	tp := jira.BasicAuthTransport{
 		Username: username, //usuário do jira
 		Password: token,    //token de api
@@ -36,6 +33,7 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 
 	for _, rule := range rules {
 		if !validateRule(jiraIssue.CustomFields, rule.Forward.Input.Fields) {
+			log.Println("Regra não atendida")s
 			continue
 		}
 
@@ -116,12 +114,14 @@ func validateRule(customFields []entity.CustomField, fields []entity.Field) bool
 		ruleFieldState := false
 		for _, customField := range customFields {
 			if field.Name == customField.CustomID && field.Value == customField.Value {
+				log.Println(field.Name == customField.CustomID && field.Value == customField.Value)
 				ruleFieldState = true
 			}
 		}
 
 		//Caso os requisitos para a regra não sejam atendidas, retorna falso
 		ruleState = ruleState && ruleFieldState
+		log.Println(ruleState)
 	}
 
 	return ruleState
