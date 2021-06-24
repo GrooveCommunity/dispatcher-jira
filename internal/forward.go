@@ -33,7 +33,7 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 
 	for _, rule := range rules {
 		if !validateRule(jiraIssue.CustomFields, rule.Forward.Input.Fields) {
-			log.Println("Regra não atendida")s
+			log.Println("Regra não atendida")
 			continue
 		}
 
