@@ -42,8 +42,8 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 			continue
 		}
 
-		updateStatusIssue(jiraIssue.IssueID, client, "Analisar - SD")
-		updateStatusIssue(jiraIssue.IssueID, client, "Acionar Squad")
+		updateStatusIssue(client, jiraIssue.IssueID, "Analisar - SD")
+		updateStatusIssue(client, jiraIssue.IssueID, "Acionar Squad")
 
 		updateIssueCustomField(entity.JiraForwarded{Issue: jiraIssue, Rule: rule})
 	}
@@ -54,7 +54,7 @@ func UpdateRules(rule entity.Rule) {
 }
 
 func updateStatusIssue(client *jira.Client, issueID, status string) {
-	fmt.Println("Issue ID:" + issue.ID)
+	fmt.Println("Issue ID:" + issueID)
 
 	var transitionID string
 	possibleTransitions, _, err := client.Issue.GetTransitions(issueID)
