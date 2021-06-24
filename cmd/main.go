@@ -65,5 +65,7 @@ func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	log.Println("Iniciando validação de regra")
+
 	go internal.ForwardIssue(jiraIssue, username, token, endpoint)
 }

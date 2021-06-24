@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 
+	"log"
+
 	"github.com/GrooveCommunity/glib-cloud-storage/gcp"
 	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 	"github.com/andygrunwald/go-jira"
@@ -18,6 +20,9 @@ var rules []entity.Rule
 func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) {
 
 	rules = GetRules()
+
+	log.Println("Regras consideradas: ")
+	log.Println(rules)
 
 	tp := jira.BasicAuthTransport{
 		Username: username, //usuário do jira
