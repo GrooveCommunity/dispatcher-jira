@@ -54,6 +54,9 @@ func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	b, _ := json.Marshal(&pr)
+	log.Println(string(b))
+
 	requestJson, err := base64.StdEncoding.DecodeString(pr.Message.Data)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Não foi possível decodificar o json da fila"), http.StatusBadRequest)
