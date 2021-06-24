@@ -115,7 +115,8 @@ func validateRule(customFields []entity.CustomField, fields []entity.Field) bool
 		ruleState = ruleState && ruleFieldState
 	}
 
-	log.Println("Validate Rule: " + ruleState)
+	log.Print("Validate Rule: ")
+	log.Println(ruleState)
 
 	return ruleState
 }
