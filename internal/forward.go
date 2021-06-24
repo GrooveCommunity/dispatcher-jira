@@ -8,18 +8,14 @@ import (
 	"net/http"
 	"os"
 
-	"log"
-
 	"github.com/GrooveCommunity/glib-cloud-storage/gcp"
 	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 	"github.com/andygrunwald/go-jira"
 )
 
-var rules []entity.Rule
-
 func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) {
 
-	rules = GetRules()
+	rules := GetRules()
 
 	tp := jira.BasicAuthTransport{
 		Username: username, //usuário do jira
@@ -33,7 +29,6 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 
 	for _, rule := range rules {
 		if !validateRule(jiraIssue.CustomFields, rule.Forward.Input.Fields) {
-			log.Println("Regra não atendida")
 			continue
 		}
 
@@ -50,10 +45,6 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 
 		updateIssueCustomField(entity.JiraForwarded{Issue: jiraIssue, Rule: rule})
 	}
-}
-
-func UpdateRules(rule entity.Rule) {
-	rules = append(rules, rule)
 }
 
 func updateStatusIssue(client *jira.Client, issueID, status string) {
@@ -113,15 +104,13 @@ func validateRule(customFields []entity.CustomField, fields []entity.Field) bool
 	for _, field := range fields {
 		ruleFieldState := false
 		for _, customField := range customFields {
-			if field.Name == customField.CustomID && field.Value == customField.Value {
-				log.Println(field.Name == customField.CustomID && field.Value == customField.Value)
+			if field.ID == customField.CustomID && field.Value == customField.Value {
 				ruleFieldState = true
 			}
 		}
 
 		//Caso os requisitos para a regra não sejam atendidas, retorna falso
 		ruleState = ruleState && ruleFieldState
-		log.Println(ruleState)
 	}
 
 	return ruleState

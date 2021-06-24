@@ -11,9 +11,6 @@ import (
 
 func WriteRule(rule entity.Rule) {
 	gcp.WriteObject(rule, "rules-dispatcher", rule.Name)
-
-	//Atualiza a estrutura de rules
-	UpdateRules(rule)
 }
 
 func GetRules() []entity.Rule {

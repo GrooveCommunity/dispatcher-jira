@@ -27,6 +27,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/healthy", handleValidateHealthy).Methods("GET")
 	router.HandleFunc("/queue-dispatcher-jira", handleQueueDispatcher).Methods("POST")
+	router.HandleFunc("/put-rule", handlePutRule).Methods("POST")
 
 	username = os.Getenv("JIRA_USERNAME")
 	token = os.Getenv("JIRA_TOKENAPI")
@@ -48,6 +49,8 @@ func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
 
 	var pr pushRequest
 
+	log.Println(r.Body)
+
 	if err := json.NewDecoder(r.Body).Decode(&pr); err != nil {
 		http.Error(w, fmt.Sprintf("Não foi possível decodificar o body"), http.StatusBadRequest)
 		return
@@ -66,4 +69,15 @@ func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
 	}
 
 	go internal.ForwardIssue(jiraIssue, username, token, endpoint)
+}
+
+func handlePutRule(w http.ResponseWriter, r *http.Request) {
+	var rule entity.Rule
+
+	err := json.NewDecoder(r.Body).Decode(&rule)
+	if err != nil {
+		panic(err)
+	}
+
+	internal.WriteRule(rule)
 }
