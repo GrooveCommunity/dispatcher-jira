@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 
+	"log"
+
 	"github.com/GrooveCommunity/glib-cloud-storage/gcp"
 	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 	"github.com/andygrunwald/go-jira"
@@ -112,6 +114,8 @@ func validateRule(customFields []entity.CustomField, fields []entity.Field) bool
 		//Caso os requisitos para a regra não sejam atendidas, retorna falso
 		ruleState = ruleState && ruleFieldState
 	}
+
+	log.Println("Validate Rule: " + ruleState)
 
 	return ruleState
 }

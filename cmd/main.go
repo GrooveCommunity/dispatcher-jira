@@ -49,8 +49,6 @@ func handleQueueDispatcher(w http.ResponseWriter, r *http.Request) {
 
 	var pr pushRequest
 
-	log.Println(r.Body)
-
 	if err := json.NewDecoder(r.Body).Decode(&pr); err != nil {
 		http.Error(w, fmt.Sprintf("Não foi possível decodificar o body"), http.StatusBadRequest)
 		return
