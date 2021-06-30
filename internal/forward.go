@@ -34,7 +34,8 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 			continue
 		}
 
-		if rule.Forward.Input.HasAttachment && len(jiraIssue.Attachment) == 0 {
+		//regra considera se é para ignorar o anexo, caso não seja a regra irá validar os cenários onde o anexo precise existir e o cenário onde o anexo não deva ser informado
+		if !rule.Forward.Input.IgnoreAttachment && ((rule.Forward.Input.HasAttachment && len(jiraIssue.Attachment) == 0) || (!rule.Forward.Input.HasAttachment && len(jiraIssue.Attachment) > 0)) {
 			continue
 		}
 

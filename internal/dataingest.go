@@ -5,7 +5,7 @@ import (
 
 	"encoding/json"
 
-	gcp "github.com/GrooveCommunity/glib-cloud-storage/gcp"
+	"github.com/GrooveCommunity/glib-cloud-storage/gcp"
 	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 )
 
