@@ -28,7 +28,9 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 		panic("\nError:" + err.Error())
 	}
 
+principal:
 	for _, rule := range rules {
+
 		if !validateRule(jiraIssue.CustomFields, rule.Forward.Input.Fields) {
 			continue
 		}
@@ -45,7 +47,7 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 				//Valida se existe o conteúdo informado na regra no campo description
 				if !strings.Contains(jiraIssue.Description, content) {
 					//A regra não é valida se não existir o conteúdo informado no campo description
-					continue
+					continue principal
 				}
 			}
 		}
