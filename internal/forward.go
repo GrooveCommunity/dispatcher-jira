@@ -39,8 +39,16 @@ func ForwardIssue(jiraIssue entity.JiraIssue, username, token, endpoint string) 
 			continue
 		}
 
-		if rule.Forward.Input.Content != "" && !strings.Contains(jiraIssue.Description, rule.Forward.Input.Content) {
-			continue
+		//verifica se foi definido alguma regra para validação de conteúdo na description
+		if len(rule.Forward.Input.Contents) > 0 {
+			//Verificar os conteúdos informados na regra
+			for _, content := range rule.Forward.Input.Contents {
+				//Valida se existe o conteúdo informado na regra no campo description
+				if !strings.Contains(jiraIssue.Description, content) {
+					//A regra não é valida se não existir o conteúdo informado no campo description
+					continue
+				}
+			}
 		}
 
 		updateStatusIssue(client, jiraIssue.IssueID, "Analisar - SD")

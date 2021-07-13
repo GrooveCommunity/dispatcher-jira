@@ -28,6 +28,7 @@ func main() {
 	router.HandleFunc("/healthy", handleValidateHealthy).Methods("GET")
 	router.HandleFunc("/queue-dispatcher-jira", handleQueueDispatcher).Methods("POST")
 	router.HandleFunc("/put-rule", handlePutRule).Methods("POST")
+	//router.HandleFunc("/rules", handleRules).Methods("GET")
 
 	username = os.Getenv("JIRA_USERNAME")
 	token = os.Getenv("JIRA_TOKENAPI")
