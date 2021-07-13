@@ -35,9 +35,9 @@ func main() {
 	endpoint = os.Getenv("JIRA_ENDPOINT")
 	appPort = os.Getenv("APP_PORT")
 
-	if username == "" || token == "" || endpoint == "" || appPort == "" {
+	/*if username == "" || token == "" || endpoint == "" || appPort == "" {
 		log.Fatal("Nem todas as variáveis de ambiente requeridas foram fornecidas. ")
-	}
+	}*/
 
 	panic(http.ListenAndServe(":"+appPort, router))
 }
