@@ -28,7 +28,7 @@ func main() {
 	router.HandleFunc("/healthy", handleValidateHealthy).Methods("GET")
 	router.HandleFunc("/queue-dispatcher-jira", handleQueueDispatcher).Methods("POST")
 	router.HandleFunc("/put-rule", handlePutRule).Methods("POST")
-	//router.HandleFunc("/rules", handleRules).Methods("GET")
+	router.HandleFunc("/rules", handleRules).Methods("GET")
 
 	username = os.Getenv("JIRA_USERNAME")
 	token = os.Getenv("JIRA_TOKENAPI")
@@ -82,4 +82,8 @@ func handlePutRule(w http.ResponseWriter, r *http.Request) {
 	}
 
 	internal.WriteRule(rule)
+}
+
+func handleRules(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(internal.GetRules())
 }
