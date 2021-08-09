@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/GrooveCommunity/dispatcher-jira/internal"
+	"github.com/GrooveCommunity/glib-cloud-storage/gcp"
 	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 	"github.com/gorilla/mux"
 	"google.golang.org/api/pubsub/v1"
@@ -29,6 +30,7 @@ func main() {
 	router.HandleFunc("/queue-dispatcher-jira", handleQueueDispatcher).Methods("POST")
 	router.HandleFunc("/put-rule", handlePutRule).Methods("POST")
 	router.HandleFunc("/rules", handleRules).Methods("GET")
+	router.HandleFunc("/rules/{name}", handlename).Methods("GET")
 
 	username = os.Getenv("JIRA_USERNAME")
 	token = os.Getenv("JIRA_TOKENAPI")
@@ -86,4 +88,29 @@ func handlePutRule(w http.ResponseWriter, r *http.Request) {
 
 func handleRules(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(internal.GetRules())
+}
+
+/*func handlename(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(internal.GetRulesName())
+}*/
+
+//Trazendo apenas uma regra
+func handlename(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	dataObjects2 := gcp.GetObjects("rules-dispatcher")
+	//var dataObjects1 []entity.Rule
+
+	//Fazendo varredura com o For, para buscar os objetos do bucket
+	for _, item := range dataObjects2 {
+		var data entity.Rule //Criando variavel para armazenar a nossa Struct "Rule"
+
+		json.Unmarshal(item, &data) //Unmarshal utilizado para armazenar o Json dos objetos do bucket, em uma estrutura de dados, no caso a strutc "Rule"
+
+		//Condição caso o argumento "name" do nosso endpoint digitado, seja igual ao parametro Name da nossa struct.
+		if data.Name == params["name"] {
+
+			json.NewEncoder(w).Encode(data) //Codificando a nossa struct para um Json
+		}
+	}
 }
