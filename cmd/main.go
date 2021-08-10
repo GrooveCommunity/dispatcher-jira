@@ -94,7 +94,7 @@ func handleRules(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(internal.GetRulesName())
 }*/
 
-//Trazendo apenas uma regra
+//Trazendo apenas uma regra do dispatcher
 func handlename(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
