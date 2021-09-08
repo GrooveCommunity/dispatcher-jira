@@ -21,7 +21,7 @@ type pushRequest struct {
 }
 
 var (
-	username, token, endpoint, appPort string
+	username, token, endpoint, appPort, bucketname string
 )
 
 func main() {
@@ -36,6 +36,7 @@ func main() {
 	token = os.Getenv("JIRA_TOKENAPI")
 	endpoint = os.Getenv("JIRA_ENDPOINT")
 	appPort = os.Getenv("APP_PORT")
+	bucketname = os.Getenv("GCP_RULES_BUCKET")
 
 	/*if username == "" || token == "" || endpoint == "" || appPort == "" {
 		log.Fatal("Nem todas as variáveis de ambiente requeridas foram fornecidas. ")
@@ -90,15 +91,11 @@ func handleRules(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(internal.GetRules())
 }
 
-/*func handlename(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(internal.GetRulesName())
-}*/
-
 //Trazendo apenas uma regra do dispatcher groove
 func handlename(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
-	dataObjects2 := gcp.GetObjects("rules-dispatcher")
+	dataObjects2 := gcp.GetObjects(bucketname)
 	//var dataObjects1 []entity.Rule
 
 	//Fazendo varredura com o For, para buscar os objetos do bucket

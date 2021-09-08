@@ -2,6 +2,7 @@ package internal
 
 import (
 	"log"
+	"os"
 
 	"encoding/json"
 
@@ -9,14 +10,16 @@ import (
 	"github.com/GrooveCommunity/glib-noc-event-structs/entity"
 )
 
+var bucketnames = os.Getenv("GCP_RULES_BUCKET")
+
 func WriteRule(rule entity.Rule) {
-	gcp.WriteObject(rule, "rules-dispatcher", rule.Name)
+	gcp.WriteObject(rule, bucketnames, rule.Name)
 }
 
 func GetRules() []entity.Rule {
 	var rules []entity.Rule
 
-	dataObjects := gcp.GetObjects("rules-dispatcher")
+	dataObjects := gcp.GetObjects(bucketnames)
 
 	for _, b := range dataObjects {
 		var rule entity.Rule
