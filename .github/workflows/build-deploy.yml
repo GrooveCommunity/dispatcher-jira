@@ -1,0 +1,48 @@
+name: Build and Deploy Image
+
+on:
+  push:
+    branches:
+    - 'development'
+
+env:
+  PROJECT_ID: ${{ secrets.DEV_GKE_NOC_PROJECT }}
+  GKE_REGION: us-central1
+  GKE_CLUSTER: noc
+  IMAGE: dispatcher-jira-paygo
+  APP_PORT: 9578
+  VERSION: 2.1.2
+
+jobs:
+  build_and_deploy_docker:
+    name: Build and Deploy Image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+  
+    - name: Set outputs
+      id: vars
+      run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+    - name: Setup gcloud CLI
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        service_account_key: ${{ secrets.DEV_GKE_NOC_SA_KEY }}
+        project_id: ${{ secrets.DEV_GKE_NOC_PROJECT }}
+
+    - name: Configure Docker 
+      run: |-
+        gcloud --quiet auth configure-docker
+  
+    - name: Build Docker Image
+      run: |-
+        docker build --build-arg APP_PORT=${{ env.APP_PORT }} --tag "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}" .
+    
+    - name: Deploys Docker Image
+      run: |
+        docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}"
+    
+  
