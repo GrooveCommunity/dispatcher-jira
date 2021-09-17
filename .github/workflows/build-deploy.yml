@@ -3,7 +3,7 @@ name: Build and Deploy Image
 on:
   push:
     branches:
-    - 'development'
+    - development
 
 env:
   PROJECT_ID: ${{ secrets.DEV_GKE_NOC_PROJECT }}
