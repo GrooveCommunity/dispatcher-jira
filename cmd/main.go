@@ -84,6 +84,8 @@ func handlePutRule(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
+	log.Printf("cadastrando regra %s", rule.Name)
+
 	internal.WriteRule(rule)
 }
 
