@@ -1,0 +1,9 @@
+port: 8080
+domain: 
+image:
+bucket:
+secrets:
+  endpoint: https://paygo.atlassian.net/
+  username:
+  tokenapi:
+  

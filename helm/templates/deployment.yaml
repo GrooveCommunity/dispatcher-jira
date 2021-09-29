@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dispatcher-jira
+  labels:
+    app: dispatcher-jira
+    version: v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dispatcher-jira
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: dispatcher-jira
+        version: v1
+    spec:
+      containers:
+      - name: dispatcher-jira
+        image: {{ .Values.image }}
+        env:
+          - name: JIRA_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: jira-secret
+                key: username
+
+          - name: JIRA_TOKENAPI
+            valueFrom:
+              secretKeyRef:
+                name: jira-secret
+                key: tokenapi
+
+          - name: JIRA_ENDPOINT
+            valueFrom:
+              secretKeyRef:
+                name: jira-secret
+                key: jiraendpoint
+          
+          - name: APP_PORT
+            value: "{{ .Values.port }}"
+            
+          - name: GCP_RULES_BUCKET
+            value: "{{ .Values.bucket }}"
+            
+              
+        ports:
+        - containerPort: {{ .Values.port }}
+        livenessProbe:
+          httpGet:
+            path: /healthy
+            port: {{ .Values.port }}
+          initialDelaySeconds: 3
+          periodSeconds: 3

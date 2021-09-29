@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dispatcher-jira
+  labels:
+    app: dispatcher-jira
+    service: dispatcher-jira
+spec:
+  selector:
+    app: dispatcher-jira
+  ports:
+    - name: http
+      port: 80
+      targetPort: {{ .Values.port }}
+      protocol: TCP
+  type: NodePort
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dispatcher-jira
+  labels:
+    account: dispatcher-jira

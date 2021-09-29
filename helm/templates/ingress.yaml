@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dispatcher-jira
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: lb-dispatcher-jira
+    networking.gke.io/managed-certificates: dispatcher-jira
+spec: 
+  rules:
+  - http: 
+     paths: 
+     - path: /healthy
+       pathType: Exact
+       backend: 
+        service: 
+          name: dispatcher-jira
+          port: 
+            number: 80
+     - path: /queue-dispatcher-jira
+       pathType: Exact
+       backend:
+         service: 
+          name: dispatcher-jira
+          port:
+            number: 80 
+     - path: /put-rule
+       pathType: Exact
+       backend:
+         service: 
+          name: dispatcher-jira
+          port:
+            number: 80
+     - path: /rules
+       pathType: Prefix
+       backend:
+         service: 
+          name: dispatcher-jira
+          port:
+            number: 80
