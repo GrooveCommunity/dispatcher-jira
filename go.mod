@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go v0.96.0 // indirect
 	cloud.google.com/go/pubsub v1.17.0 // indirect
 	cloud.google.com/go/storage v1.17.0 // indirect
-	github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210929190944-a076d5cc8d3b // indirect
+	github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210930192203-a4d264c7d881 // indirect
 	github.com/GrooveCommunity/glib-noc-event-structs v0.0.0-20210728230202-13f2dfb03984
 	github.com/andygrunwald/go-jira v1.14.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect

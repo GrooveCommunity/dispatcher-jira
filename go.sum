@@ -60,6 +60,8 @@ github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210727200910-7b8cd2e39f93
 github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210727200910-7b8cd2e39f93/go.mod h1:AbefMnq4SymmcvZEYF9ThNHtaK9IDblhRzaaOAxyB2I=
 github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210929190944-a076d5cc8d3b h1:7xx8IA9pBN44TNuCcGpXBkphhFLUZ8kCrNW3YL7iMvU=
 github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210929190944-a076d5cc8d3b/go.mod h1:AbefMnq4SymmcvZEYF9ThNHtaK9IDblhRzaaOAxyB2I=
+github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210930192203-a4d264c7d881 h1:L69Gg8boqKkGQlCYCaumMCNaeHtKxT9ISKH+MtyUV1I=
+github.com/GrooveCommunity/glib-cloud-storage v0.0.0-20210930192203-a4d264c7d881/go.mod h1:AbefMnq4SymmcvZEYF9ThNHtaK9IDblhRzaaOAxyB2I=
 github.com/GrooveCommunity/glib-noc-event-structs v0.0.0-20210728230202-13f2dfb03984 h1:CK8hc2Zkbnszfj1Wb+Td87kmh75qgt9uDAgp8tt5UPs=
 github.com/GrooveCommunity/glib-noc-event-structs v0.0.0-20210728230202-13f2dfb03984/go.mod h1:4w3Iuty7Cr7KO3L+FqI4ajDJ9M2Hs+N7ulvLnDHuC3Y=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
