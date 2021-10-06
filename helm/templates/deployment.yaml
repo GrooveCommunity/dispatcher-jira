@@ -17,6 +17,7 @@ spec:
         app: dispatcher-jira
         version: v1
     spec:
+      serviceAccountName: dispatcher-jira
       containers:
       - name: dispatcher-jira
         image: {{ .Values.image }}

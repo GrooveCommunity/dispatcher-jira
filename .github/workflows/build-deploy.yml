@@ -45,4 +45,23 @@ jobs:
       run: |
         docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}"
     
-  
+                
+    - name: 'Deploy'
+      uses: 'deliverybot/helm@v1'
+      with:
+        release: 'dispatcher-jira'
+        namespace: 'paygo'
+        chart: 'helm'
+        values: |
+          port: 8080
+          domain: qa-dispatcher.jira.paygo.noc.grooveops.io
+          image: gcr.io/dispatcher-dev-325420/dispatcher-jira-paygo:2.1.2.74fd1e7
+          bucket: dispatcher-dev-rules
+          gcpServiceAccount: dispatcher-jira@dispatcher-dev-325420.iam.gserviceaccount.com
+          secrets:
+            endpoint: https://paygo.atlassian.net/
+            username: dejair.santos@paygo-consult.com.br
+            tokenapi: fhAHn1XAW3p5zdzsQLSTD239
+
+        
+        
