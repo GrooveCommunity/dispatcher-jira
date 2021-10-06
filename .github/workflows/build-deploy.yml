@@ -49,7 +49,7 @@ jobs:
     - name: Get The GKE credentials
       run: |-
         gcloud container clusters get-credentials "noc" --region us-central1
-        ls -lR /root/.kube
+        
                 
     - name: 'Deploy'
       uses: 'deliverybot/helm@v1'
