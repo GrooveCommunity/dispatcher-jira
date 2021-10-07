@@ -49,7 +49,7 @@ jobs:
     - name: Get The GKE credentials
       run: |-
         gcloud container clusters get-credentials "noc" --region us-central1
-        
+        ls -lR /home/runner
                 
     - name: 'Deploy'
       uses: 'deliverybot/helm@v1'
@@ -65,8 +65,8 @@ jobs:
           gcpServiceAccount: dispatcher-jira@dispatcher-dev-325420.iam.gserviceaccount.com
           secrets:
             endpoint: https://paygo.atlassian.net/
-            username: 
-            tokenapi: 
+            username: dejair.santos@paygo-consult.com.br
+            tokenapi: fhAHn1XAW3p5zdzsQLSTD239
         helm: helm3
         
         
