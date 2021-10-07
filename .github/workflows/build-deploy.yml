@@ -65,8 +65,8 @@ jobs:
           gcpServiceAccount: dispatcher-jira@dispatcher-dev-325420.iam.gserviceaccount.com
           secrets:
             endpoint: https://paygo.atlassian.net/
-            username: dejair.santos@paygo-consult.com.br
-            tokenapi: fhAHn1XAW3p5zdzsQLSTD239
+            username: 
+            tokenapi: 
         helm: helm3
         
         
