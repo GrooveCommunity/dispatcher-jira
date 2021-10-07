@@ -50,10 +50,10 @@ jobs:
       run: |-
         gcloud container clusters get-credentials "noc" --region us-central1
         pwd
-        cat kubeconfig
+        cat kubeconfig.yaml
         
       env: 
-        KUBECONFIG: kubeconfig
+        KUBECONFIG: kubeconfig.yaml
           
                 
     - name: 'Deploy'
@@ -73,5 +73,7 @@ jobs:
             username: dejair.santos@paygo-consult.com.br
             tokenapi: fhAHn1XAW3p5zdzsQLSTD239
         helm: helm3
+      env: 
+        KUBECONFIG: /github/workspace/kubeconfig.yaml
         
         
