@@ -89,5 +89,6 @@ jobs:
         helm: helm3
       env: 
         KUBECONFIG: /github/workspace/kubeconfig.yaml
-        
+        GOOGLE_APPLICATION_CREDENTIALS: /github/workspace/service_account.json
+
         
