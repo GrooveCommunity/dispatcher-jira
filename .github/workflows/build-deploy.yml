@@ -62,9 +62,12 @@ jobs:
             certificate-authority-data: "$(eval "$GET_CMD --format='value(masterAuth.clusterCaCertificate)'")"
         EOF
         cat kubeconfig.yaml
+        echo "$SA_KEY" > service_account.json
+        cat service_account.json
         
       env: 
-        KUBECONFIG: kubeconfig.yaml
+        SA_KEY: ${{ secrets.DEV_GKE_NOC_SA_KEY}}
+        
           
                 
     - name: 'Deploy'
