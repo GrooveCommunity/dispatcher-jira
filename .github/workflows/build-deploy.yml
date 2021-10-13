@@ -36,7 +36,7 @@ jobs:
       with:
         version: '290.0.1'
         service_account_key: ${{ secrets.DEV_GKE_NOC_SA_KEY }}
-        project_id: ${{ secrets.DEV_GKE_NOC_PROJECT }}
+        project_id: ${{ env.PROJECT_ID }}
 
     - name: Configure Docker 
       run: |-
