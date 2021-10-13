@@ -6,9 +6,14 @@ on:
     - 'development'
 
 env:
-  PROJECT_ID: ${{ secrets.DEV_GKE_NOC_PROJECT }}
+  PROJECT_ID: dispatcher-dev-325420
   GKE_REGION: us-central1
+  GCP_SERVICE_ACCOUNT: dispatcher-jira@dispatcher-dev-325420.iam.gserviceaccount.com
+  GCP_BUCKET: dispatcher-dev-rules
+  DOMAIN: qa-dispatcher.jira.paygo.noc.grooveops.io
   GKE_CLUSTER: noc
+  JIRA_TOKEN: ${{ secrets.DEV_JIRA_TOKEN }}
+  JIRA_USER: ${{ secrets.DEV_JIRA_USER }}
   IMAGE: dispatcher-jira-paygo
   APP_PORT: 9578
   VERSION: 2.1.2
@@ -37,13 +42,13 @@ jobs:
       run: |-
         gcloud --quiet auth configure-docker
   
-    # - name: Build Docker Image
-      # run: |-
-      #   docker build --build-arg APP_PORT=${{ env.APP_PORT }} --tag "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}" .
+    - name: Build Docker Image
+      run: |-
+        docker build --build-arg APP_PORT=${{ env.APP_PORT }} --tag "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}" .
     
-    # - name: Deploys Docker Image
-      # run: |
-      #   docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}"
+    - name: Deploys Docker Image
+      run: |
+        docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}"
     
     
     - name: Get The GKE credentials
@@ -78,14 +83,14 @@ jobs:
         chart: 'helm'
         values: |
           port: 8080
-          domain: qa-dispatcher.jira.paygo.noc.grooveops.io
-          image: gcr.io/dispatcher-dev-325420/dispatcher-jira-paygo:2.1.2.74fd1e7
-          bucket: dispatcher-dev-rules
-          gcpServiceAccount: dispatcher-jira@dispatcher-dev-325420.iam.gserviceaccount.com
+          domain: ${{ env.DOMAIN }}
+          image: gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}
+          bucket: ${{ env.GCP_BUCKET }} 
+          gcpServiceAccount: ${{ env.GCP_SERVICE_ACCOUNT }}
           secrets:
             endpoint: https://paygo.atlassian.net/
-            username: dejair.santos@paygo-consult.com.br
-            tokenapi: fhAHn1XAW3p5zdzsQLSTD239
+            username: ${{ env.JIRA_USER }}
+            tokenapi: ${{ env.JIRA_TOKEN }}
         helm: helm3
       env: 
         KUBECONFIG: /github/workspace/kubeconfig.yaml
