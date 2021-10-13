@@ -16,7 +16,7 @@ env:
   JIRA_USER: ${{ secrets.DEV_JIRA_USER }}
   IMAGE: dispatcher-jira-paygo
   APP_PORT: 9578
-  VERSION: 2.1.2
+  VERSION: 2.1.3
 
 jobs:
   build_and_deploy_docker:
