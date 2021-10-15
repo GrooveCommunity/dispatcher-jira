@@ -84,7 +84,7 @@ jobs:
         values: |
           port: 8080
           domain: ${{ env.DOMAIN }}
-          image: gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}
+          image: gcr.io/${{ env.PROJECT_ID }}/${{ env.IMAGE}}:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}
           bucket: ${{ env.GCP_BUCKET }} 
           gcpServiceAccount: ${{ env.GCP_SERVICE_ACCOUNT }}
           secrets:
