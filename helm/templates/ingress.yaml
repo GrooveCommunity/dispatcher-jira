@@ -10,28 +10,28 @@ spec:
   - http: 
      paths: 
      - path: /healthy
-       pathType: Exact
+       pathType: ImplementationSpecific
        backend: 
         service: 
           name: dispatcher-jira
           port: 
             number: 80
      - path: /queue-dispatcher-jira
-       pathType: Exact
+       pathType: ImplementationSpecific
        backend:
          service: 
           name: dispatcher-jira
           port:
             number: 80 
      - path: /put-rule
-       pathType: Exact
+       pathType: ImplementationSpecific
        backend:
          service: 
           name: dispatcher-jira
           port:
             number: 80
      - path: /rules
-       pathType: Prefix
+       pathType: ImplementationSpecific
        backend:
          service: 
           name: dispatcher-jira
