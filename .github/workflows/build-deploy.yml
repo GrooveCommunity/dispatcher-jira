@@ -42,13 +42,13 @@ jobs:
       run: |-
         gcloud --quiet auth configure-docker
   
-    # - name: Build Docker Image
-    #   run: |-
-    #     docker build --build-arg APP_PORT=${{ env.APP_PORT }} --tag "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}" .
+    - name: Build Docker Image
+      run: |-
+        docker build --build-arg APP_PORT=${{ env.APP_PORT }} --tag "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}" .
     
-    # - name: Deploys Docker Image
-    #   run: |
-    #     docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}"
+    - name: Deploys Docker Image
+      run: |
+        docker push "gcr.io/$PROJECT_ID/$IMAGE:${{ env.VERSION }}.${{ steps.vars.outputs.sha_short }}"
     
     
     - name: Get The GKE credentials
