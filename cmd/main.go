@@ -26,6 +26,7 @@ var (
 
 func main() {
 	router := mux.NewRouter()
+	router.HandleFunc("/", handleRoot).Methods("GET")
 	router.HandleFunc("/healthy", handleValidateHealthy).Methods("GET")
 	router.HandleFunc("/queue-dispatcher-jira", handleQueueDispatcher).Methods("POST")
 	router.HandleFunc("/put-rule", handlePutRule).Methods("POST")
@@ -43,6 +44,10 @@ func main() {
 	}*/
 
 	panic(http.ListenAndServe(":"+appPort, router))
+}
+
+func handleRoot(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(200)
 }
 
 func handleValidateHealthy(w http.ResponseWriter, r *http.Request) {
