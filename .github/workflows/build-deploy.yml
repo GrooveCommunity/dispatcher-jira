@@ -10,7 +10,7 @@ env:
   GKE_REGION: us-central1
   GCP_SERVICE_ACCOUNT: dispatcher-jira@dispatcher-dev-325420.iam.gserviceaccount.com
   GCP_BUCKET: dispatcher-dev-rules
-  DOMAIN: qa-dispatcher.jira.paygo.noc.grooveops.io
+  DOMAIN: dispatcher.jira.paygo.noc.qa.grooveops.io
   GKE_CLUSTER: noc
   JIRA_TOKEN: ${{ secrets.DEV_JIRA_TOKEN }}
   JIRA_USER: ${{ secrets.DEV_JIRA_USER }}
